@@ -47,4 +47,4 @@ for listObject in orderedList:
    newATag = listObject.find('a')
    MLBurls.append('https://www.mlb.com/' + newATag.get('href'))
 
-print(MLBurls)
+#print(MLBurls)
