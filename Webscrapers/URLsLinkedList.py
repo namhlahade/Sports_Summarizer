@@ -37,5 +37,8 @@ def arrayToList(arr, n):
     return root
 
 NBALinkedList = arrayToList(NBAurls, len(NBAurls))
+display(NBALinkedList)
 NFLLinkedList = arrayToList(NFLurls, len(NFLurls))
+display(NFLLinkedList)
 MLBLinkedList = arrayToList(MLBurls, len(MLBurls))
+display(MLBLinkedList)

@@ -31,20 +31,14 @@ for li in list:
    div = li.find('div')
    article = div.find('article')
    aTag = article.find('a')
-   NBAurls.append('nba.com' + aTag.get('href'))
+   NBAurls.append('https://www.nba.com' + aTag.get('href'))
  
 #print(NBAurls)
 
-MLBURL = "https://www.mlb.com/news"
-
+MLBURL = "https://www.yardbarker.com/mlb"
 page3 = requests.get(MLBURL)
 soup3 = BeautifulSoup(page3.content, "html.parser")
-sideBar = soup3.find('div', {"class": "template-article__sidebar-inner"})
-unorderedList = sideBar.find('ul')
-orderedList = unorderedList.find_all('li')
-
-for listObject in orderedList:
-   newATag = listObject.find('a')
-   MLBurls.append('https://www.mlb.com/' + newATag.get('href'))
-
-#print(MLBurls)
+for link in soup3.find_all('a', href=True):
+   if ('/mlb/articles/' in link['href']):
+      if ('https://www.yardbarker.com' + link['href'] not in MLBurls):
+         MLBurls.append('https://www.yardbarker.com' + link['href'])
