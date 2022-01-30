@@ -1,6 +1,7 @@
 NBAurls = []
 NFLurls = []
 MLBurls = []
+finalImageList = []
 from bs4 import BeautifulSoup
 import requests
 
@@ -8,6 +9,19 @@ NFLURL = "https://www.nfl.com/news/all-news"
 
 page = requests.get(NFLURL)
 soup = BeautifulSoup(page.content, "html.parser")
+images = soup.find_all('img')
+imageList = []
+for image in images:
+   img = image.get('data-src')
+   if img is None:
+      img = image.get('src')
+   if "/t_lazy" in img:
+      imageList.append(img)
+
+
+for image in imageList:
+   image = image.replace("/t_lazy","")
+   finalImageList.append(image)
 
 section = soup.find_all('a')
 for divider in section:
