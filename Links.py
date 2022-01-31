@@ -2,6 +2,7 @@ NBAurls = []
 NFLurls = []
 MLBurls = []
 finalImageList = []
+MLBfinalImageList = []
 from bs4 import BeautifulSoup
 import requests
 
@@ -48,7 +49,6 @@ for li in list:
    NBAurls.append('https://www.nba.com' + aTag.get('href'))
  
 #print(NBAurls)
-
 MLBURL = "https://www.yardbarker.com/mlb"
 page3 = requests.get(MLBURL)
 soup3 = BeautifulSoup(page3.content, "html.parser")

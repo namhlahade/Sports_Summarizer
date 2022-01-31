@@ -1,11 +1,16 @@
 from PowerRankings import powerRanks
 from PowerRankings import newUrl
 from PowerRankings import abbreviations
-from TextScrape import textDict
+from TextScrape import MLBImageList, textDict
+from TextScrape import MLBtextDict
 from Links import finalImageList
 from MLBPowerRankings import mlbAbbreviations
 from MLBPowerRankings import mlbPowerRankings
 from MLBPowerRankings import MLBurl
+from TextScrape import finalNFLimages
+from NBAPowerRankings import NBAurl
+from NBAPowerRankings import nbapowerrankings
+from NBA_Acronym import nbaAcronyms
 
     # takes list of powerRankings data and converts it into HTML template
 
@@ -76,7 +81,7 @@ for text in textDict.keys():
                 <th><a href=\"''' + text + '''\">''' + header + '''</a></th>
             </tr>
             <tr>
-            <td>''' + """<a href=\"""" + text + """\">""" + '''<img src=\"''' + finalImageList[countVariable + 1] + '''\" alt="Flowers in Chania" width = "700"></a></td>
+            <td>''' + """<a href=\"""" + text + """\">""" + '''<img src=\"''' + finalNFLimages[countVariable] + '''\" alt="Flowers in Chania" width = "700"></a></td>
             </tr>
             <tr>
                 <td>''' + info + '''</td>
@@ -120,6 +125,74 @@ htmlStr = htmlStr + '''
             </td>
         </tr>
     </table>'''
+
+
+
+countVariable = 1
+flagVar = 1
+articleTitleInfo = ''
+for text in MLBtextDict.keys():
+   if flagVar <= 3:
+       header = MLBtextDict[text][0]
+       info = MLBtextDict[text][1]
+       articleTitleInfo = articleTitleInfo + '''<table class = "body-table" width=700>
+           <tr>
+               <th><a href=\"''' + text + '''\">''' + header + '''</a></th>
+           </tr>
+           <tr>
+           <td>''' + """<a href=\"""" + text + """\">""" + '''<img src=\"''' + MLBImageList[countVariable] + '''\" alt="Flowers in Chania" width = "700"></a></td>
+           </tr>
+           <tr>
+               <td>''' + info + '''</td>
+           </tr>
+       </table>
+       '''
+       countVariable = countVariable + 1
+       flagVar = flagVar + 1
+htmlStr = htmlStr + articleTitleInfo
+
+htmlStr = htmlStr + """<table class = "body-table" width=700>
+        <tr>
+            <td colspan = "3" class = "title-headers"><a href=\"""" + NBAurl + """\">NBA Power Rankings</a></td>
+        </tr>
+        <tr>
+            <td>
+                <table class = "power-rankings" colspan = "3" border = "1" width=500>
+                    <tr>
+                        <td>Team Name</td>
+                        <td>Record</td>
+                        <td>Rank</td>
+                    </tr>
+
+                    <tbody>
+                        <tbody id="myTable">"""
+counter = 1
+for rank in nbapowerrankings:
+    if (counter <= 10):
+        row = "<tr>"
+        row = row + "\n<td>" + rank.get('Name') + " <img src=\"/Users/namhlahade/Documents/GitHub/Sports_Summarizer/NBA Logos/"+ nbaAcronyms[rank.get('Name')] + ".svg\" width=\"50\" height = \"50\">" + "</td>"
+        row = row + "\n<td>" + rank.get('Record') + "</td>"
+        row = row + "\n<td>" + str(rank.get('Rank')) + "</td>"
+        row = row + "\n</tr>"
+        htmlStr = htmlStr + row
+    counter = counter + 1
+
+htmlStr = htmlStr + '''
+                        </tbody>
+                    </tbody>
+                </table>
+                <td>
+            </td>
+        </tr>
+    </table>'''
+
+
+
+
+
+
+
+
 
 
 htmlStr = htmlStr + '''</body>
