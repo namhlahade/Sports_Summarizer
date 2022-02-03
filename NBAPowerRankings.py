@@ -28,4 +28,3 @@ for rank in rankingRows:
 
     teamRank = teamRank + 1
 
-print(nbapowerrankings)
