@@ -1,7 +1,8 @@
 from PowerRankings import powerRanks
 from PowerRankings import newUrl
 from PowerRankings import abbreviations
-from TextScrape import MLBImageList, textDict
+from TextScrape import MLBImageList
+from testFile import textDict
 from TextScrape import MLBtextDict
 from Links import finalImageList
 from MLBPowerRankings import mlbAbbreviations
@@ -53,13 +54,16 @@ htmlStr = """
 
                     <tbody>
                         <tbody id="myTable">"""
+counter = 1
 for rank in powerRanks:
-    row = "<tr>"
-    row = row + "\n<td>" + rank.get('Name') + " <img src=\"/Users/namhlahade/Documents/GitHub/Sports_Summarizer/Logos/"+ abbreviations[rank.get('Name')] + ".webp\" width=\"50\" height = \"50\">" + "</td>"
-    row = row + "\n<td>" + rank.get('Record') + "</td>"
-    row = row + "\n<td>" + str(rank.get('Rank')) + "</td>"
-    row = row + "\n</tr>"
-    htmlStr = htmlStr + row
+    if counter <= 10:
+        row = "<tr>"
+        row = row + "\n<td>" + rank.get('Name') + " <img src=\"/Users/namhlahade/Documents/GitHub/Sports_Summarizer/Logos/NFLTeams/" + abbreviations[rank.get('Name')] + ".jpg\" width=\"50\" height = \"50\">" + "</td>"
+        row = row + "\n<td>" + rank.get('Record') + "</td>"
+        row = row + "\n<td>" + str(rank.get('Rank')) + "</td>"
+        row = row + "\n</tr>"
+        htmlStr = htmlStr + row
+    counter = counter + 1
 
 htmlStr = htmlStr + '''
                         </tbody>
@@ -110,7 +114,7 @@ counter = 1
 for rank in mlbPowerRankings:
     if counter <= 10:
         row = "<tr>"
-        row = row + "\n<td>" + rank.get('Name') + " <img src=\"/Users/namhlahade/Documents/GitHub/Sports_Summarizer/MLB Logos/"+ mlbAbbreviations[rank.get('Name')] + ".svg\" width=\"40\" height = \"40\">" + "</td>"
+        row = row + "\n<td>" + rank.get('Name') + " <img src=\"/Users/namhlahade/Documents/GitHub/Sports_Summarizer/MLB Logos/mlbLogosFinal/"+ mlbAbbreviations[rank.get('Name')] + ".svg\" width=\"40\" height = \"40\">" + "</td>"
         row = row + "\n<td>" + rank.get('Record') + "</td>"
         row = row + "\n<td>" + str(rank.get('Rank')) + "</td>"
         row = row + "\n</tr>"

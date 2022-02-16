@@ -15,8 +15,13 @@ MLBImageList = []
 imageCounter = 1
 NFLurlDict = {}
 for url in NFLurls:
-    NFLurlDict[url] = finalImageList[imageCounter]
-    imageCounter = imageCounter + 1
+    try:
+        NFLurlDict[url] = finalImageList[imageCounter]
+        imageCounter = imageCounter + 1
+    except IndexError:
+        break
+    except KeyError:
+        print('idk')
 
 
 for url in NFLurls:
@@ -28,14 +33,16 @@ for url in NFLurls:
         divTag = soup.find('div', {'class': 'nfl-c-article__container'})
         textDivs = divTag.find_all('div', {'class': 'nfl-c-body-part nfl-c-body-part--text'})
         title = soup.find('h1', {'class':'nfl-c-article__title'}).get_text()
+
         info = ""
         for paragraph in textDivs:
             pTag = paragraph.find('p')
             info = info + pTag.get_text()
+
         textDict[url] = [title, info]
         finalNFLimages.append(NFLurlDict[url])
     except AttributeError:
-        print('URL is not good!')
+        print('URL is not good! ' + url)
 
 flagVariable = False
 for url in MLBurls:

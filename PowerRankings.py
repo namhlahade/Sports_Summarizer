@@ -19,6 +19,13 @@ for name in teamNames:
         teamAbrv.remove(abr)
         break
 
+abbreviations['Washington Commanders'] = 'WAS'
+del abbreviations['Washington Football Team']
+del abbreviations['NY Jets']
+del abbreviations['NY Giants']
+abbreviations['New York Giants'] = 'NYG'
+abbreviations['New York Jets'] = 'NYJ'
+
 url = 'https://www.nfl.com/news/series/power-rankings-news'
 page = requests.get(url)
 soup = BeautifulSoup(page.content, "html.parser")
