@@ -89,6 +89,7 @@ htmlStr = """
             <td>
                 <table class = "power-rankings" colspan = "3" border = "1" width=500>
                     <tr>
+                        <td>Logo</td>
                         <td>Team Name</td>
                         <td>Record</td>
                         <td>Rank</td>
@@ -100,7 +101,8 @@ counter = 1
 for rank in powerRanks:
     if counter <= 10:
         row = "<tr>"
-        row = row + "\n<td>" + rank.get('Name') + " <img src=" + NFLImages[counter - 1] + " width=\"50\" height = \"50\">" + "</td>"
+        row = row + "\n<td>" + "<img src=" + NFLImages[counter - 1] + " width=\"50\" height = \"50\">" + "</td>"
+        row = row + "\n<td>" + rank.get('Name') + "</td>"
         row = row + "\n<td>" + rank.get('Record') + "</td>"
         row = row + "\n<td>" + str(rank.get('Rank')) + "</td>"
         row = row + "\n</tr>"
@@ -145,6 +147,7 @@ htmlStr = htmlStr +  """    <table class = "body-table" width=700>
             <td>
             <table class = "power-rankings" colspan = "3" border = "1" width=500>
                     <tr>
+                        <td>Logo</td>
                         <td>Team Name</td>
                         <td>Record</td>
                         <td>Rank</td>
@@ -156,7 +159,8 @@ counter = 1
 for rank in mlbPowerRankings:
     if counter <= 10:
         row = "<tr>"
-        row = row + "\n<td>" + rank.get('Name') + " <img src=" + MLBImages[counter - 1] + " width=\"40\" height = \"40\">" + "</td>"
+        row = row + "\n<td>" + "<img src=" + MLBImages[counter - 1] + " width=\"40\" height = \"40\">" + "</td>"
+        row = row + "\n<td>" + rank.get('Name') + "</td>"
         row = row + "\n<td>" + rank.get('Record') + "</td>"
         row = row + "\n<td>" + str(rank.get('Rank')) + "</td>"
         row = row + "\n</tr>"
@@ -205,6 +209,7 @@ htmlStr = htmlStr + """<table class = "body-table" width=700>
             <td>
                 <table class = "power-rankings" colspan = "3" border = "1" width=500>
                     <tr>
+                        <td>Logo</td>
                         <td>Team Name</td>
                         <td>Record</td>
                         <td>Rank</td>
@@ -216,7 +221,8 @@ counter = 1
 for rank in nbapowerrankings:
     if (counter <= 10):
         row = "<tr>"
-        row = row + "\n<td>" + rank.get('Name') + " <img src=" + NBAImages[counter - 1] + " width=\"50\" height = \"50\">" + "</td>"
+        row = row + "\n<td>" + "<img src=" + NBAImages[counter - 1] + " width=\"50\" height = \"50\">" + "</td>"
+        row = row + "\n<td>" + rank.get('Name') + "</td>"
         row = row + "\n<td>" + rank.get('Record') + "</td>"
         row = row + "\n<td>" + str(rank.get('Rank')) + "</td>"
         row = row + "\n</tr>"
@@ -266,6 +272,7 @@ htmlStr = htmlStr + """<table class = "body-table" width=700>
             <td>
                 <table class = "power-rankings" colspan = "3" border = "1" width=500>
                     <tr>
+                        <td>Logo</td>
                         <td>Team Name</td>
                         <td>Record</td>
                         <td>Rank</td>
@@ -277,7 +284,8 @@ counter = 1
 for rank in nhlpowerrankings:
     if (counter <= 10):
         row = "<tr>"
-        row = row + "\n<td>" + rank.get('Name') + " <img src=" + NHLImages[counter - 1] + " width=\"50\" height = \"50\">" + "</td>"
+        row = row + "\n<td>" + "<img src=" + NHLImages[counter - 1] + " width=\"50\" height = \"50\">" + "</td>"
+        row = row + "\n<td>" + rank.get('Name') + "</td>"
         row = row + "\n<td>" + rank.get('Record') + "</td>"
         row = row + "\n<td>" + str(rank.get('Rank')) + "</td>"
         row = row + "\n</tr>"
