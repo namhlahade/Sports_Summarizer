@@ -7,12 +7,14 @@ from Links import NFLurls
 from Links import MLBurls
 from Links import finalImageList
 
+print(NBAurls)
+
 textDict = {}
 MLBtextDict = {}
+NBAtextDict = {}
 finalNFLimages = []
-MLBImageList = []
 
-imageCounter = 1
+imageCounter = 0
 NFLurlDict = {}
 for url in NFLurls:
     try:
@@ -20,9 +22,6 @@ for url in NFLurls:
         imageCounter = imageCounter + 1
     except IndexError:
         break
-    except KeyError:
-        print('idk')
-
 
 for url in NFLurls:
     URL = url
@@ -48,26 +47,40 @@ flagVariable = False
 for url in MLBurls:
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
-    div = soup.find('div', {'class':'art_body_article'})
+    
     try:
-        info = ""
-        pTags = div.find_all('p')
-        for p in pTags:
-            if not p.find('a'):
-                info = info + p.get_text()
-        articleTitle = soup.find('div',{'class':'art_headline'})
-        hTag = articleTitle.find('h1').get_text()
-
-        try:
-            image = soup.find('div',{'class':'lzy it-medium_16_9'})
-            img = image.find('img')
-            src = img.get('src')
-            MLBImageList.append(src)
-            if flagVariable == True:
-                MLBtextDict[url] = [hTag, info]
-        except AttributeError:
-            print('Cannot find Image')
-
-        flagVariable = True
+        head = soup.find('div',{'class':'Article-head'})
+        h1 = head.find('h1')
+        title = h1.get_text()
+        
+        div = soup.find('div',{'class':'Article-bodyContent'})
+        pTag = div.find_all('p')
+        info = ''
+        for p in pTag:
+            info = info + p.get_text()
+        MLBtextDict[url] = [title, info]
     except AttributeError:
-        print('URL is not good!')
+        print('URL is not good ' + url)
+
+for url in NBAurls:
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, "html.parser")
+
+    try:
+        constraint = soup.find('div',{'class':'Article_article__2Ue3h'})
+
+        pTag = constraint.find_all('p')
+        info = ''
+        for p in pTag:
+            info = info + p.get_text()
+
+        info = info.replace("Information from The Associated Press was used in this report.","")
+
+        h1 = soup.find('h1', {'class':'h9'})
+        title = h1.get_text()
+        NBAtextDict[url] = [title, info]
+    except AttributeError:
+        print('URL is not good ' + url)
+
+
+    

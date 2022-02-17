@@ -1,17 +1,20 @@
 from PowerRankings import powerRanks
+from PowerRankings import NFLImages
 from PowerRankings import newUrl
 from PowerRankings import abbreviations
-from TextScrape import MLBImageList
+from Links import MLBImageList
 from testFile import textDict
-from TextScrape import MLBtextDict
-from Links import finalImageList
-from MLBPowerRankings import mlbAbbreviations
+from testFile import MLBtextDict
+from testFile import NBAtextDict
+from MLBPowerRankings import MLBImages
 from MLBPowerRankings import mlbPowerRankings
 from MLBPowerRankings import MLBurl
 from TextScrape import finalNFLimages
 from NBAPowerRankings import NBAurl
 from NBAPowerRankings import nbapowerrankings
+from NBAPowerRankings import NBAImages
 from NBA_Acronym import nbaAcronyms
+from Links import NBAImageList
 
     # takes list of powerRankings data and converts it into HTML template
 
@@ -30,6 +33,42 @@ htmlStr = """
     <style>
         body{
             background-color: white;
+        }
+        .title-headers{
+            font-size: 25px;
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+        .power-rankings{
+            border: 10px solid black;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid black;
+            text-align: center;
+            font-family: sans-serif;
+            margin: 10px auto;
+        }
+        .body-table{
+            border-collapse: separate;
+            background-color: white;
+            border-radius: 15px;
+            border: 1px solid lightgrey;
+            text-align: center;
+            font-family: sans-serif;
+            margin: 15px auto;
+        }
+        .title-table{
+            border-collapse: separate;
+            background-color: white;
+            border-radius: 15px;
+            border: 1px solid lightgrey;
+            /*box-shadow: 0px 10px 30px 5px rgba(0,0,0,.15);*/
+            font-size: 100px;
+            margin: 15px auto;
+            text-align: center;
+            font-family: sans-serif;
+            
         }
     </style>
 </head>
@@ -58,7 +97,7 @@ counter = 1
 for rank in powerRanks:
     if counter <= 10:
         row = "<tr>"
-        row = row + "\n<td>" + rank.get('Name') + " <img src=\"/Users/namhlahade/Documents/GitHub/Sports_Summarizer/Logos/NFLTeams/" + abbreviations[rank.get('Name')] + ".jpg\" width=\"50\" height = \"50\">" + "</td>"
+        row = row + "\n<td>" + rank.get('Name') + " <img src=" + NFLImages[counter - 1] + " width=\"50\" height = \"50\">" + "</td>"
         row = row + "\n<td>" + rank.get('Record') + "</td>"
         row = row + "\n<td>" + str(rank.get('Rank')) + "</td>"
         row = row + "\n</tr>"
@@ -114,7 +153,7 @@ counter = 1
 for rank in mlbPowerRankings:
     if counter <= 10:
         row = "<tr>"
-        row = row + "\n<td>" + rank.get('Name') + " <img src=\"/Users/namhlahade/Documents/GitHub/Sports_Summarizer/MLB Logos/mlbLogosFinal/"+ mlbAbbreviations[rank.get('Name')] + ".svg\" width=\"40\" height = \"40\">" + "</td>"
+        row = row + "\n<td>" + rank.get('Name') + " <img src=" + MLBImages[counter - 1] + " width=\"40\" height = \"40\">" + "</td>"
         row = row + "\n<td>" + rank.get('Record') + "</td>"
         row = row + "\n<td>" + str(rank.get('Rank')) + "</td>"
         row = row + "\n</tr>"
@@ -174,7 +213,7 @@ counter = 1
 for rank in nbapowerrankings:
     if (counter <= 10):
         row = "<tr>"
-        row = row + "\n<td>" + rank.get('Name') + " <img src=\"/Users/namhlahade/Documents/GitHub/Sports_Summarizer/NBA Logos/"+ nbaAcronyms[rank.get('Name')] + ".svg\" width=\"50\" height = \"50\">" + "</td>"
+        row = row + "\n<td>" + rank.get('Name') + " <img src=" + NBAImages[counter - 1] + " width=\"50\" height = \"50\">" + "</td>"
         row = row + "\n<td>" + rank.get('Record') + "</td>"
         row = row + "\n<td>" + str(rank.get('Rank')) + "</td>"
         row = row + "\n</tr>"
@@ -192,7 +231,28 @@ htmlStr = htmlStr + '''
 
 
 
-
+countVariable = 1
+flagVar = 1
+articleTitleInfo = ''
+for text in NBAtextDict.keys():
+   if flagVar <= 3:
+       header = NBAtextDict[text][0]
+       info = NBAtextDict[text][1]
+       articleTitleInfo = articleTitleInfo + '''<table class = "body-table" width=700>
+           <tr>
+               <th><a href=\"''' + text + '''\">''' + header + '''</a></th>
+           </tr>
+           <tr>
+           <td>''' + """<a href=\"""" + text + """\">""" + '''<img src=\"''' + NBAImageList[countVariable] + '''\" alt="Flowers in Chania" width = "700"></a></td>
+           </tr>
+           <tr>
+               <td>''' + info + '''</td>
+           </tr>
+       </table>
+       '''
+       countVariable = countVariable + 1
+       flagVar = flagVar + 1
+htmlStr = htmlStr + articleTitleInfo
 
 
 

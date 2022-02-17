@@ -6,6 +6,8 @@ import requests
 from pandas import *
 from bs4 import BeautifulSoup
 
+NBAImages = []
+
 NBAurl = "https://www.cbssports.com/nba/powerrankings/"
 
 page = requests.get(NBAurl)
@@ -28,3 +30,9 @@ for rank in rankingRows:
 
     teamRank = teamRank + 1
 
+    imgDiv = a.find('div',{'class':'logo'})
+    div2 = imgDiv.find('div')
+    fig = div2.find('figure',{'class':'img'})
+    img = fig.find('img')
+    src = img.get('data-lazy')
+    NBAImages.append(src)

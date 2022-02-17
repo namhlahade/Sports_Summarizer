@@ -41,6 +41,18 @@ soup2 = BeautifulSoup(page2.content, "html.parser")
  
 rankingsTags = soup2.find_all('div', {'class':'nfl-o-ranked-item__title'})
 recordsTags = soup2.find_all('div', {'class':'nfl-o-ranked-item__info'})
+pic = soup2.find_all('div',{'class':'nfl-o-ranked-item'})
+
+NFLImages = []
+for pictureItems in pic:
+   pictureDiv = pictureItems.find('div',{'class':'nfl-o-ranked-item__image'})
+   pictureFig = pictureDiv.find('figure')
+   picturePic = pictureFig.find('picture')
+   img = picturePic.find('img')
+   print(img)
+   src = img.get('data-src')
+   src = src.replace("/t_lazy", "")
+   NFLImages.append(src)
 
 rankings = []
 for rank in rankingsTags:
