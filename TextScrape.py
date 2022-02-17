@@ -5,13 +5,14 @@ from bs4 import BeautifulSoup
 from Links import NBAurls
 from Links import NFLurls
 from Links import MLBurls
+from Links import NHLurls
 from Links import finalImageList
-
-print(NBAurls)
+from NHLPowerRankings import NHLUrl
 
 textDict = {}
 MLBtextDict = {}
 NBAtextDict = {}
+NHLtextDict = {}
 finalNFLimages = []
 
 imageCounter = 0
@@ -43,7 +44,6 @@ for url in NFLurls:
     except AttributeError:
         print('URL is not good! ' + url)
 
-flagVariable = False
 for url in MLBurls:
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
@@ -82,5 +82,23 @@ for url in NBAurls:
     except AttributeError:
         print('URL is not good ' + url)
 
-
+for url in NHLurls:
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, "html.parser")
     
+    try:
+        head = soup.find('div',{'class':'Article-head'})
+        h1 = head.find('h1')
+        title = h1.get_text()
+        
+        div = soup.find('div',{'class':'Article-bodyContent'})
+        pTag = div.find_all('p')
+        info = ''
+        for p in pTag:
+            info = info + p.get_text()
+        NHLtextDict[url] = [title, info]
+    except AttributeError:
+        print('URL is not good ' + url)
+
+
+print(NHLtextDict)

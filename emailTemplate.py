@@ -1,3 +1,21 @@
+import os
+import smtplib
+import imghdr
+from email.message import EmailMessage
+
+EMAIL_ADDRESS = os.environ.get('lahadenamh@gmail.com')
+EMAIL_PASSWORD = os.environ.get('dukegoogle2024')
+
+contacts = ['lahadenamh@gmail.com', 's.lahade@gmail.com', 'oum.lahade@gmail.com','h.lahade@gmail.com']
+
+msg = EmailMessage()
+msg['Subject'] = 'Latest Sports New for the Day!'
+msg['From'] = EMAIL_ADDRESS
+msg['To'] = contacts
+
+msg.set_content('This is a plain text email')
+
+msg.add_alternative("""\
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <!DOCTYPE html>
@@ -453,3 +471,9 @@
        </table>
        </body>
 </html>
+""", subtype='html')
+
+
+with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+    smtp.login('lahadenamh@gmail.com', 'dukegoogle2024')
+    smtp.send_message(msg)

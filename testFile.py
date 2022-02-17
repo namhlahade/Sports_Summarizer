@@ -3,6 +3,7 @@ import time
 from TextScrape import textDict
 from TextScrape import MLBtextDict
 from TextScrape import NBAtextDict
+from TextScrape import NHLtextDict
 import json
 
 
@@ -76,4 +77,26 @@ for text3 in NBAtextDict.keys():
     except KeyError:
         print('hello')
 
-print(NBAtextDict)
+for text3 in NHLtextDict.keys():
+    try:
+        url = "https://api.meaningcloud.com/summarization-1.0"
+
+        payload={
+            'key': 'a186f0762d84d855c20596808adba62f',
+            'txt': NHLtextDict[text3][1],
+            'sentences': '5'
+        }
+
+        response = requests.post(url, data=payload)
+
+        #print('Status code:', response.status_code)
+        #print(response.json())
+        diction = response.json()
+        #print(diction['summary'])
+        summary = diction['summary']
+        newSum = summary.replace('[...]','')
+        NHLtextDict[text3][1] = newSum
+        time.sleep(1)
+    
+    except KeyError:
+        print('hello')

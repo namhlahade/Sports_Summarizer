@@ -2,10 +2,11 @@ from PowerRankings import powerRanks
 from PowerRankings import NFLImages
 from PowerRankings import newUrl
 from PowerRankings import abbreviations
-from Links import MLBImageList
+from Links import MLBImageList, NHLImageList
 from testFile import textDict
 from testFile import MLBtextDict
 from testFile import NBAtextDict
+from testFile import NHLtextDict
 from MLBPowerRankings import MLBImages
 from MLBPowerRankings import mlbPowerRankings
 from MLBPowerRankings import MLBurl
@@ -13,6 +14,7 @@ from TextScrape import finalNFLimages
 from NBAPowerRankings import NBAurl
 from NBAPowerRankings import nbapowerrankings
 from NBAPowerRankings import NBAImages
+from NHLPowerRankings import NHLUrl, nhlpowerrankings, NHLImages
 from NBA_Acronym import nbaAcronyms
 from Links import NBAImageList
 
@@ -46,6 +48,7 @@ htmlStr = """
             border-radius: 5px;
             border: 1px solid black;
             text-align: center;
+            vertical-align: middle;
             font-family: sans-serif;
             margin: 10px auto;
         }
@@ -255,12 +258,67 @@ for text in NBAtextDict.keys():
 htmlStr = htmlStr + articleTitleInfo
 
 
+htmlStr = htmlStr + """<table class = "body-table" width=700>
+        <tr>
+            <td colspan = "3" class = "title-headers"><a href=\"""" + NHLUrl + """\">NHL Power Rankings</a></td>
+        </tr>
+        <tr>
+            <td>
+                <table class = "power-rankings" colspan = "3" border = "1" width=500>
+                    <tr>
+                        <td>Team Name</td>
+                        <td>Record</td>
+                        <td>Rank</td>
+                    </tr>
+
+                    <tbody>
+                        <tbody id="myTable">"""
+counter = 1
+for rank in nhlpowerrankings:
+    if (counter <= 10):
+        row = "<tr>"
+        row = row + "\n<td>" + rank.get('Name') + " <img src=" + NHLImages[counter - 1] + " width=\"50\" height = \"50\">" + "</td>"
+        row = row + "\n<td>" + rank.get('Record') + "</td>"
+        row = row + "\n<td>" + str(rank.get('Rank')) + "</td>"
+        row = row + "\n</tr>"
+        htmlStr = htmlStr + row
+    counter = counter + 1
+
+htmlStr = htmlStr + '''
+                        </tbody>
+                    </tbody>
+                </table>
+                <td>
+            </td>
+        </tr>
+    </table>'''
 
 
+countVariable = 1
+flagVar = 1
+articleTitleInfo = ''
+for text in NHLtextDict.keys():
+   if flagVar <= 3:
+       header = NHLtextDict[text][0]
+       info = NHLtextDict[text][1]
+       articleTitleInfo = articleTitleInfo + '''<table class = "body-table" width=700>
+           <tr>
+               <th><a href=\"''' + text + '''\">''' + header + '''</a></th>
+           </tr>
+           <tr>
+           <td>''' + """<a href=\"""" + text + """\">""" + '''<img src=\"''' + NHLImageList[countVariable] + '''\" alt="Flowers in Chania" width = "700"></a></td>
+           </tr>
+           <tr>
+               <td>''' + info + '''</td>
+           </tr>
+       </table>
+       '''
+       countVariable = countVariable + 1
+       flagVar = flagVar + 1
+htmlStr = htmlStr + articleTitleInfo
 
 
 htmlStr = htmlStr + '''</body>
 </html>'''
 
 print(htmlStr)
-

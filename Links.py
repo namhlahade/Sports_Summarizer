@@ -3,6 +3,9 @@ MLBurls = []
 finalImageList = []
 MLBImageList = []
 NBAImageList = []
+NHLImageList = []
+NHLurls = []
+
 from bs4 import BeautifulSoup
 import requests
 
@@ -12,22 +15,6 @@ page = requests.get(NFLURL)
 soup = BeautifulSoup(page.content, "html.parser")
 images = soup.find_all('img')
 imageList = []
- 
-'''
-for image in images:
-      img = image.get('data-src')
-  if img is None:
-     img = image.get('src')
-  if "/t_lazy" in img:
-     imageList.append(img)
- 
- 
-for image in imageList:
-  image = image.replace("/t_lazy","")
-  finalImageList.append(image)
- 
- 
-'''
  
 section = soup.find_all('a')
  
@@ -96,3 +83,28 @@ for row in rows:
       MLBImageList.append(src)
       MLBurls.append(theUrl)
 
+unfilteredNHL = {}
+NHLurl = 'https://www.cbssports.com/nhl/'
+page4 = requests.get(NHLurl)
+soup4 = BeautifulSoup(page4.content, "html.parser")
+ul = soup4.find('ul',{'arena-pack-list-wrapper load-more-content-wrapper'})
+divTag = ul.find('div',{'data-component':'loadMore'})
+rows = divTag.find_all('ul',{'class':'row article-list-pack-row'})
+
+for row in rows:
+   l = row.find_all(['li'])
+   for li in l:
+      try:
+         div = li.find('div',{'class','article-list-pack-image'})
+         aTag = div.find('a')
+         
+         theUrl = 'https://www.cbssports.com' + aTag.get('href')
+
+         fig = aTag.find('figure',{'class':'img'})
+         image = fig.find('img')
+         src = image.get('data-lazy')
+         NHLImageList.append(src)
+         NHLurls.append(theUrl)
+
+      except AttributeError:
+         x = 5
